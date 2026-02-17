@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAdminAuth } from "@/context/AdminAuthContext";
-import { ShieldCheck, LayoutDashboard, FileText, CalendarCheck, LogOut, Menu, X, ChevronRight, Users } from "lucide-react";
+import { ShieldCheck, LayoutDashboard, FileText, CalendarCheck, LogOut, Menu, X, ChevronRight, Users, Megaphone, UserPlus } from "lucide-react";
 
 const navItems = [
   { href: "/admin/dashboard", label: "Vue d'ensemble", icon: LayoutDashboard },
   { href: "/admin/dashboard/documents", label: "Documents", icon: FileText },
   { href: "/admin/dashboard/absences", label: "Absences", icon: CalendarCheck },
+  { href: "/admin/dashboard/annonces", label: "Annonces", icon: Megaphone },
+  { href: "/admin/dashboard/eleves", label: "Élèves", icon: UserPlus },
 ];
 
 export default function AdminDashboardLayout({ children }: { children: React.ReactNode }) {

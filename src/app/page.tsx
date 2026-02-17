@@ -230,7 +230,7 @@ export default function HomePage() {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6" style={{ color: "#ffffff" }}>
               {t.hero_title_1[lang]}{" "}
               <span style={{ color: "#f0d080" }}>{t.hero_title_2[lang]}</span>
-            </h1>
+          </h1>
 
             <p className="text-lg sm:text-xl leading-relaxed mb-8 max-w-2xl" style={{ color: "rgba(255,255,255,0.75)" }}>
               {t.hero_desc[lang]}

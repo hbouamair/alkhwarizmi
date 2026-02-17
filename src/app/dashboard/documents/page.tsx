@@ -121,43 +121,17 @@ export default function DocumentsPage() {
           </h1>
           <p className="text-sm mt-1" style={{ color: "#94a3b8" }}>Demandez vos attestations, relevés de notes et certificats.</p>
         </div>
-        <button onClick={() => setShowForm(!showForm)} className="inline-flex items-center gap-2 px-5 py-2.5 font-semibold text-sm rounded-xl shadow-lg transition-all" style={{ background: "linear-gradient(135deg, #0e7c47, #065f35)", color: "#ffffff" }}>
-          {showForm ? <><X className="w-4 h-4" /> Annuler</> : <><Plus className="w-4 h-4" /> Nouvelle Demande</>}
+        <button onClick={() => setShowForm(true)} className="inline-flex items-center gap-2 px-5 py-2.5 font-semibold text-sm rounded-xl shadow-lg transition-all" style={{ background: "linear-gradient(135deg, #0e7c47, #065f35)", color: "#ffffff" }}>
+          <Plus className="w-4 h-4" /> Nouvelle Demande
         </button>
       </div>
 
+      {/* Notifications en bas de page */}
       {successMsg && (
-        <div className="flex items-center gap-3 p-4 rounded-xl text-sm" style={{ backgroundColor: "#ecfdf5", border: "1px solid #a7f3d0", color: "#047857" }}>
-          <CheckCircle2 className="w-5 h-5 flex-shrink-0" /><span>{successMsg}</span>
-        </div>
-      )}
-
-      {showForm && (
-        <div className="rounded-2xl p-6 shadow-sm" style={{ backgroundColor: "#ffffff", border: "1px solid #f1f5f9" }}>
-          <h3 className="text-base font-bold mb-4" style={{ color: "#0f172a" }}>📝 Nouvelle demande</h3>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: "#0f172a" }}>Type de document</label>
-              <div className="relative">
-                <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} required className="w-full appearance-none pl-4 pr-10 py-3 rounded-xl" style={{ backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", color: "#0f172a" }}>
-                  <option value="">— Sélectionner —</option>
-                  <option value="attestation_scolarite">Attestation de Scolarité</option>
-                  <option value="releve_notes">Relevé de Notes</option>
-                  <option value="certificat_depart">Certificat de Départ</option>
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: "#94a3b8" }} />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1.5" style={{ color: "#0f172a" }}>Remarques <span style={{ color: "#94a3b8", fontWeight: 400 }}>(optionnel)</span></label>
-              <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} placeholder="Précisions..." className="w-full px-4 py-3 rounded-xl resize-none" style={{ backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", color: "#0f172a" }} />
-            </div>
-            <div className="flex justify-end">
-              <button type="submit" className="inline-flex items-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-xl shadow-lg" style={{ background: "linear-gradient(135deg, #0e7c47, #065f35)", color: "#ffffff" }}>
-                <Send className="w-4 h-4" />Soumettre
-              </button>
-            </div>
-          </form>
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-md w-full px-4">
+          <div className="flex items-center gap-3 p-4 rounded-xl text-sm shadow-lg animate-slide-up" style={{ backgroundColor: "#ecfdf5", border: "1px solid #a7f3d0", color: "#047857" }}>
+            <CheckCircle2 className="w-5 h-5 flex-shrink-0" /><span>{successMsg}</span>
+          </div>
         </div>
       )}
 
@@ -231,6 +205,51 @@ export default function DocumentsPage() {
           <p style={{ color: "rgba(30,64,175,0.8)" }}>Les documents prêts peuvent être téléchargés en PDF. Délai moyen : <strong>3 à 5 jours ouvrables</strong>.</p>
         </div>
       </div>
+
+      {/* ===== MODAL ===== */}
+      {showForm && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={() => setShowForm(false)}>
+          <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }} />
+          <div className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl modal-animate" style={{ backgroundColor: "#ffffff" }} onClick={(e) => e.stopPropagation()}>
+            {/* Header */}
+            <div className="sticky top-0 z-10 flex items-center justify-between p-6 pb-4 rounded-t-2xl" style={{ backgroundColor: "#ffffff", borderBottom: "1px solid #f1f5f9" }}>
+              <h3 className="text-lg font-bold flex items-center gap-2" style={{ color: "#0f172a" }}>
+                <FileText className="w-5 h-5" style={{ color: "#0e7c47" }} />
+                Nouvelle demande
+              </h3>
+              <button onClick={() => setShowForm(false)} className="w-8 h-8 rounded-lg flex items-center justify-center transition-all" style={{ backgroundColor: "#f1f5f9", color: "#64748b" }}><X className="w-4 h-4" /></button>
+            </div>
+
+            {/* Body */}
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: "#0f172a" }}>Type de document *</label>
+                <div className="relative">
+                  <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} required className="w-full appearance-none pl-4 pr-10 py-3 rounded-xl" style={{ backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", color: "#0f172a" }}>
+                    <option value="">— Sélectionner un document —</option>
+                    <option value="attestation_scolarite">Attestation de Scolarité</option>
+                    <option value="releve_notes">Relevé de Notes</option>
+                    <option value="certificat_depart">Certificat de Départ</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style={{ color: "#94a3b8" }} />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: "#0f172a" }}>Remarques <span style={{ color: "#94a3b8", fontWeight: 400 }}>(optionnel)</span></label>
+                <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} placeholder="Précisions sur votre demande..." className="w-full px-4 py-3 rounded-xl resize-none" style={{ backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", color: "#0f172a" }} />
+              </div>
+
+              {/* Footer */}
+              <div className="flex justify-end gap-3 pt-4" style={{ borderTop: "1px solid #f1f5f9" }}>
+                <button type="button" onClick={() => setShowForm(false)} className="px-5 py-2.5 text-sm font-semibold rounded-xl" style={{ color: "#64748b", border: "1px solid #e2e8f0" }}>Annuler</button>
+                <button type="submit" className="inline-flex items-center gap-2 px-6 py-2.5 font-semibold text-sm rounded-xl shadow-lg" style={{ background: "linear-gradient(135deg, #0e7c47, #065f35)", color: "#ffffff" }}>
+                  <Send className="w-4 h-4" />Soumettre
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
