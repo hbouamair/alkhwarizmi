@@ -84,7 +84,7 @@ export default function DashboardLayout({
   };
 
   // Support both old (firstName/lastName) and new (first_name/last_name) field names
-  const u = user as Record<string, string>;
+  const u = user as unknown as Record<string, string>;
   const firstName = u.first_name || u.firstName || "";
   const lastName = u.last_name || u.lastName || "";
   const userMassar = u.massar || "";

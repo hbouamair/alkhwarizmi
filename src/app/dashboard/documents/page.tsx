@@ -73,7 +73,7 @@ export default function DocumentsPage() {
     if (!user || req.status !== "pret") return;
     setDownloading(req.id);
     try {
-      const u = user as Record<string, string>;
+      const u = user as unknown as Record<string, string>;
       const pdfStudent = {
         id: user.id, massar: user.massar, firstName: u.first_name || u.firstName || "",
         lastName: u.last_name || u.lastName || "", email: user.email, password: "",

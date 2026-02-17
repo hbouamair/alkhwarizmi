@@ -77,7 +77,7 @@ export default function DashboardPage() {
       <div className="rounded-2xl p-6 sm:p-8 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0e7c47 0%, #065f35 50%, #0f2419 100%)" }}>
         <div className="relative z-10">
           <p className="text-sm font-medium mb-1" style={{ color: "rgba(255,255,255,0.7)" }}>Bienvenue,</p>
-          <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: "#ffffff" }}>{(user as Record<string,string>).first_name || (user as Record<string,string>).firstName} {(user as Record<string,string>).last_name || (user as Record<string,string>).lastName}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: "#ffffff" }}>{(user as unknown as Record<string,string>).first_name || (user as unknown as Record<string,string>).firstName} {(user as unknown as Record<string,string>).last_name || (user as unknown as Record<string,string>).lastName}</h1>
           <p className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>{user.niveau} — {user.classe}</p>
         </div>
       </div>
